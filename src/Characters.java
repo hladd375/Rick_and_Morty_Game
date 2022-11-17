@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Characters {
 
         //VARIABLE DECLARATION SECTION
@@ -10,16 +12,20 @@ public class Characters {
         public int width;                 //the width of the hero image
         public int height;                //the height of the hero image
         public boolean isAlive;           //a boolean to denote if the hero is alive or dead
+        public Rectangle hitBox;
 
-        public Characters(String pName, int pXpos, int pYpos) { // Astronaut constructor
+        public Characters(String pName, int pXpos, int pYpos, int pDx, int pDy) { // Astronaut constructor
                 name = pName;
                 xpos = pXpos;
                 ypos = pYpos;
-                dx = 6;
-                dy = 6;
+                //xpos = xpos = (int)(Math.random()*800+100);
+                //ypos = ypos = (int)(Math.random()*500+100);;
+                dx = pDx;
+                dy = pDy;
                 width = 100;
                 height = 100;
                 isAlive = true;
+                hitBox = new Rectangle (xpos, ypos, width, height);
         }
 
         public void bounce(){
@@ -35,24 +41,46 @@ public class Characters {
 
                 }
 
+                hitBox = new Rectangle(xpos, ypos, width, height);
+
 
         }
-        public void warp(){
+
+        public void goaliebounce() {
                 xpos = xpos + dx;
                 ypos = ypos + dy;
 
-                if (xpos >= 1000 - width ){
-                        xpos = xpos-1000;
+                if (xpos >= 1000 - width || xpos <= 0) {
+                        dx = -dx;
+
                 }
-                if (ypos >= 700 - height){
-                        ypos = ypos-700;
+                if (ypos >= 600 - height || ypos <= 100) {
+                        dy = -dy;
+
                 }
 
-                if (xpos <= 0){
-                        xpos = xpos+1000;
+                hitBox = new Rectangle(xpos, ypos, width, height);
+        }
+
+        public void wrap(){
+                xpos = xpos + dx;
+                ypos = ypos + dy;
+
+                if (xpos >= 1000 && dx > 0){ //teleport right to left
+                        xpos = 0 - width;
                 }
-                if (ypos <= 0){
-                        ypos = ypos+700;
+
+                if (xpos <= 0 - width && dx < 0){//teleport right to left
+                        xpos = 1000;
                 }
+                if (ypos <= 0 - height && dy < 0){ //teleport top to bottom
+                        ypos = 700;
+                }
+                if (ypos >= 700 && dy > 0){ //teleport bottom to top
+                        ypos = 0 - height;
+                }
+
+                hitBox = new Rectangle(xpos, ypos, width, height);
+
         }
 }

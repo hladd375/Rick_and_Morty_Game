@@ -17,9 +17,15 @@ public class BasicGameApp implements Runnable {
 
     public Image rickPic;
     public Image mortyPic;
+    public Image backgroundPic;
 
     public Characters rick;
     public Characters morty;
+    public Characters goal;
+
+    public boolean didCrash = true;
+
+    public int score = 0;
 
     //Declare the objects used in the program
     //These are things that are made up of more than one variable type
@@ -33,11 +39,17 @@ public class BasicGameApp implements Runnable {
     public BasicGameApp() {
         setUpGraphics();
 
-        rickPic = Toolkit.getDefaultToolkit().getImage("Rick.png");
-        rick = new Characters("Rick",800,400);
+        rickPic = Toolkit.getDefaultToolkit().getImage("Rick4.png");
+        rick = new Characters("Rick",70,450,0,10);
 
-        mortyPic = Toolkit.getDefaultToolkit().getImage("Morty.png");
-        morty = new Characters("Morty",400,400);
+        mortyPic = Toolkit.getDefaultToolkit().getImage("download.png");
+        morty = new Characters("Morty",(int)(Math.random()*800+100),(int)(Math.random()*500+100),6,3);
+
+        backgroundPic = Toolkit.getDefaultToolkit().getImage("SoccerFeild.jpeg");
+
+        goal = new Characters("Goal",0,200,0,0);
+
+
 
     }
 
@@ -46,6 +58,8 @@ public class BasicGameApp implements Runnable {
         //for the moment we will loop things forever.
         while (true) {
             moveThings();  //move all the game objects
+            crash();
+            goal();
             render();  // paint the graphics
             pause(20); // sleep for 10 ms
         }
@@ -61,9 +75,30 @@ public class BasicGameApp implements Runnable {
     public void moveThings() {
         //calls the move( ) code in the objects
         morty.bounce();
-        rick.warp();
+        rick.goaliebounce();
 
 
+    }
+
+    public void goal(){
+        if(morty.hitBox.intersects(goal.hitBox)){
+            System.out.println("GOAL");
+            score = score +1;
+            System.out.println(score);
+            morty.xpos = (int)(Math.random()*800+100);
+            morty.ypos = (int)(Math.random()*500+100);
+            morty.dx = -morty.dx;
+            morty.dy = -morty.dy;
+
+        }
+    }
+
+    public void crash(){
+        if (morty.hitBox.intersects(rick.hitBox)){
+            morty.dx = -morty.dx;
+
+
+        }
     }
 
     private void setUpGraphics() {
@@ -98,9 +133,18 @@ public class BasicGameApp implements Runnable {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
+        g.drawImage(backgroundPic, 0,0, WIDTH,HEIGHT,null);
+
         //draw the image of the astronaut
         g.drawImage(mortyPic, morty.xpos, morty.ypos, morty.width, morty.height, null);
         g.drawImage(rickPic, rick.xpos, rick.ypos, rick.width, rick.height, null);
+
+        g.drawRect(morty.hitBox.x, morty.hitBox.y, morty.hitBox.width, morty.hitBox.height);
+        g.drawRect(rick.hitBox.x, rick.hitBox.y, rick.hitBox.width, rick.hitBox.height);
+        g.drawRect(goal.hitBox.x,goal.hitBox.y,70,300);
+
+
+
 
 
         g.dispose();
