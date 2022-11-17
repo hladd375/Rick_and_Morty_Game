@@ -21,6 +21,7 @@ public class BasicGameApp implements Runnable {
 
     public Characters rick;
     public Characters morty;
+    //just a box for now but serves as goal will not move
     public Characters goal;
 
     public boolean didCrash = true;
