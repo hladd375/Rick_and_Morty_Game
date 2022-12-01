@@ -13,6 +13,13 @@ public class Characters {
         public int height;                //the height of the hero image
         public boolean isAlive;           //a boolean to denote if the hero is alive or dead
         public Rectangle hitBox;
+        public Rectangle rightHitBox;
+        public Rectangle leftHitBox;
+        public Rectangle topHitBox;
+        public Rectangle bottomHitBox;
+
+
+
 
         public Characters(String pName, int pXpos, int pYpos, int pDx, int pDy) { // Astronaut constructor
                 name = pName;
@@ -26,6 +33,11 @@ public class Characters {
                 height = 100;
                 isAlive = true;
                 hitBox = new Rectangle (xpos, ypos, width, height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
+                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                topHitBox = new Rectangle (xpos,ypos,width,10);
+                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);
+
         }
 
         public void bounce(){
@@ -40,9 +52,11 @@ public class Characters {
                         dy = -dy;
 
                 }
-
-                hitBox = new Rectangle(xpos, ypos, width, height);
-
+                hitBox = new Rectangle (xpos, ypos, width, height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
+                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                topHitBox = new Rectangle (xpos,ypos,width,10);
+                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);
 
         }
 
@@ -59,8 +73,11 @@ public class Characters {
 
                 }
 
-                hitBox = new Rectangle(xpos, ypos, width, height);
-        }
+                hitBox = new Rectangle (xpos, ypos, width, height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
+                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                topHitBox = new Rectangle (xpos,ypos,width,10);
+                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);        }
 
         public void wrap(){
                 xpos = xpos + dx;
