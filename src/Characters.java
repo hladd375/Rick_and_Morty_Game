@@ -44,13 +44,19 @@ public class Characters {
                 xpos = xpos + dx;
                 ypos = ypos + dy;
 
-                if (xpos >= 1000-width || xpos <= 0){
+                if (xpos >= 1000-width && dx > 0) {
                         dx = -dx;
-
                 }
-                if (ypos >= 700-height || ypos <= 0){
-                        dy = -dy;
 
+                if (xpos <= 0 && dx < 0){
+                        dx = -dx;
+                }
+                if (ypos >= 700-height && dy > 0){
+                        dy = -dy;
+                }
+
+                if (ypos <= 0 && dy < 0){
+                        dy = -dy;
                 }
                 hitBox = new Rectangle (xpos, ypos, width, height);
                 rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);

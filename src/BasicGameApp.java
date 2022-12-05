@@ -19,18 +19,13 @@ public class BasicGameApp implements Runnable {
     public Image ballPic;
     public Image peterPic;
     public Image backgroundPic;
+    //GOAL icon
     public Image giconPic;
-    //the scores
-    public Image a;
-    public Image b;
-    public Image c;
-    public Image d;
-    public Image e;
-    public Image f;
-    public Image gg;
-    public Image h;
-    public Image i;
-    public Image j;
+    //goals
+    public Image goal1Pic;
+    public Image goal2Pic;
+
+
 
 
 
@@ -40,17 +35,28 @@ public class BasicGameApp implements Runnable {
     //just a box for now but serves as goal will not move
     public Characters goal1;
     public Characters goal2;
-    //goal icon
 
 
-
+    //the scores
     public int scoregoal1 = 0;
     public int scoregoal2 = 0;
 
     public int goalTimer = 0;
     public boolean goalScored = false;
 
-    public boolean isCrashing = false;
+    //for the crash method
+
+    public boolean PisTopCrashing = false;
+    public boolean PisBottomCrashing = false;
+    public boolean PisLeftCrashing = false;
+    public boolean PisRightCrashing = false;
+
+    public boolean RisTopCrashing = false;
+    public boolean RisBottomCrashing = false;
+    public boolean RisLeftCrashing = false;
+    public boolean RisRightCrashing = false;
+
+
 
 
     //Declare the objects used in the program
@@ -73,35 +79,29 @@ public class BasicGameApp implements Runnable {
         //goalie 2
 
         peterPic = Toolkit.getDefaultToolkit().getImage("realpeter.png");
-        peter = new Characters("peter",830,450,0,-10);
+        peter = new Characters("peter",830,250,0,-10);
 
 
         ballPic = Toolkit.getDefaultToolkit().getImage("ball.png");
-        ball = new Characters("Morty",(int)(Math.random()*800+100),(int)(Math.random()*500+100),6,3);
+        ball = new Characters("Morty",(int)(Math.random()*800+100),(int)(Math.random()*500+100),4,4);
 
         backgroundPic = Toolkit.getDefaultToolkit().getImage("SoccerFeild.jpeg");
 
         goal1 = new Characters("Goal",0,250,0,0);
+        goal1Pic = Toolkit.getDefaultToolkit().getImage("soccergoal.png");
         goal1.width=70;
         goal1.height=200;
         goal2 = new Characters("Goal",930,250,0,0);
+        goal2Pic = Toolkit.getDefaultToolkit().getImage("soccergoal.png");
         goal2.width=70;
         goal2.height=200;
+
+
 
         //GOAL icon
         giconPic = Toolkit.getDefaultToolkit().getImage("GOAL.png");
 
-        //score icons
-        a = Toolkit.getDefaultToolkit().getImage("0.png");
-        b = Toolkit.getDefaultToolkit().getImage("1.png");
-        c = Toolkit.getDefaultToolkit().getImage("2.jpeg");
-        d = Toolkit.getDefaultToolkit().getImage("3.png");
-        e = Toolkit.getDefaultToolkit().getImage("4.jpg");
-        f = Toolkit.getDefaultToolkit().getImage("5.jpg");
-        gg = Toolkit.getDefaultToolkit().getImage("6.jpg");
-        h = Toolkit.getDefaultToolkit().getImage("7.jpg");
-        i = Toolkit.getDefaultToolkit().getImage("8.jpg");
-        j = Toolkit.getDefaultToolkit().getImage("9.jpeg");
+
 
 
 
@@ -143,7 +143,7 @@ public class BasicGameApp implements Runnable {
     }
 
     public void goal(){
-        if(ball.hitBox.intersects(goal1.hitBox)){
+        if(ball.hitBox.intersects(goal1.rightHitBox)){
             goalScored = true;
             System.out.println("GOAL");
             scoregoal1 = scoregoal1 +1;
@@ -154,8 +154,18 @@ public class BasicGameApp implements Runnable {
             ball.dy = -ball.dy;
             ball.hitBox.x = ball.xpos;
             ball.hitBox.y = ball.ypos;
+
         }
-        if(ball.hitBox.intersects(goal2.hitBox)){
+
+        if(ball.hitBox.intersects(goal1.topHitBox)){
+            ball.bounce();
+
+        }
+        if(ball.hitBox.intersects(goal1.bottomHitBox)){
+            ball.bounce();
+
+        }
+        if(ball.hitBox.intersects(goal2.leftHitBox)){
             goalScored = true;
             System.out.println("GOAL");
             scoregoal2 = scoregoal2 +1;
@@ -166,6 +176,15 @@ public class BasicGameApp implements Runnable {
             ball.dy = -ball.dy;
             ball.hitBox.x = ball.xpos;
             ball.hitBox.y = ball.ypos;
+        }
+
+        if(ball.hitBox.intersects(goal2.topHitBox)){
+            ball.bounce();
+
+        }
+        if(ball.hitBox.intersects(goal2.bottomHitBox)){
+            ball.bounce();
+
         }
         if (goalScored == true) {
             goalTimer++;
@@ -179,77 +198,77 @@ public class BasicGameApp implements Runnable {
 
     public void crash(){
         //ball intersects rick left hitboxes
-        if (ball.hitBox.intersects(rick.leftHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(rick.leftHitBox) && RisLeftCrashing == false){
             ball.dx = -ball.dx;
-            isCrashing = true;
+            RisLeftCrashing = true;
         }
         if(!ball.hitBox.intersects(rick.leftHitBox)){
-            isCrashing = false;
+            RisLeftCrashing = false;
         }
         //ball intersect rick right hitboxes
-        if (ball.hitBox.intersects(rick.rightHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(rick.rightHitBox) && RisRightCrashing == false){
             ball.dx = -ball.dx;
-            isCrashing = true;
+           RisRightCrashing = true;
         }
         if(!ball.hitBox.intersects(rick.rightHitBox)){
-            isCrashing = false;
+            RisRightCrashing = false;
         }
 
         //ball intersects rick top hitboxes
 
-        if (ball.hitBox.intersects(rick.topHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(rick.topHitBox) && RisTopCrashing == false){
             ball.dy = -ball.dy;
-            isCrashing = true;
+            RisTopCrashing = true;
         }
         if(!ball.hitBox.intersects(rick.topHitBox)){
-            isCrashing = false;
+            RisTopCrashing = false;
         }
 
         //ball intersects rick bottom hitboxs
 
-        if (ball.hitBox.intersects(rick.bottomHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(rick.bottomHitBox) && RisBottomCrashing == false){
             ball.dy = -ball.dy;
-            isCrashing = true;
+            RisBottomCrashing = true;
         }
         if(!ball.hitBox.intersects(rick.bottomHitBox)){
-            isCrashing = false;
+            RisBottomCrashing = false;
         }
 
         //ball intersects peter left hitboxes
-        if (ball.hitBox.intersects(peter.leftHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(peter.leftHitBox) && PisLeftCrashing == false){
             ball.dx = -ball.dx;
-            isCrashing = true;
+            PisLeftCrashing = true;
         }
         if(!ball.hitBox.intersects(peter.leftHitBox)){
-            isCrashing = false;
+            PisLeftCrashing = false;
         }
         //ball intersect peter right hitboxes
-        if (ball.hitBox.intersects(peter.rightHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(peter.rightHitBox) && PisRightCrashing == false){
             ball.dx = -ball.dx;
-            isCrashing = true;
+            PisRightCrashing = true;
         }
         if(!ball.hitBox.intersects(peter.rightHitBox)){
-            isCrashing = false;
+            PisRightCrashing = false;
         }
 
         //ball intersects peter top hitboxes
 
-        if (ball.hitBox.intersects(peter.topHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(peter.topHitBox) && PisTopCrashing == false){
             ball.dy = -ball.dy;
-            isCrashing = true;
+            PisTopCrashing = true;
         }
         if(!ball.hitBox.intersects(peter.topHitBox)){
-            isCrashing = false;
+            PisTopCrashing = false;
         }
 
         //ball intersects peter bottom hitboxs
 
-        if (ball.hitBox.intersects(peter.bottomHitBox) && isCrashing == false){
+        if (ball.hitBox.intersects(peter.bottomHitBox) && PisBottomCrashing == false){
             ball.dy = -ball.dy;
-            isCrashing = true;
+            PisBottomCrashing = true;
         }
         if(!ball.hitBox.intersects(peter.bottomHitBox)){
-            isCrashing = false;
+            PisBottomCrashing = false;
         }
 
 
@@ -289,12 +308,27 @@ public class BasicGameApp implements Runnable {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
+        //background image
+
         g.drawImage(backgroundPic, 0,0, WIDTH,HEIGHT,null);
+
+        //show score
+
+        g.setColor(Color.BLACK);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+
+        g.drawString(String.valueOf(scoregoal1),550,600);
+        g.drawString(String.valueOf(scoregoal2),400,600);
+
 
         //draw the image of the charecters
         g.drawImage(ballPic, ball.xpos, ball.ypos, ball.width, ball.height, null);
         g.drawImage(rickPic, rick.xpos, rick.ypos, rick.width, rick.height, null);
         g.drawImage(peterPic, peter.xpos, peter.ypos,peter.width,peter.height, null);
+        //goals
+        g.drawImage(goal1Pic, goal1.xpos, goal1.ypos,goal1.width,goal1.height, null);
+        g.drawImage(goal2Pic, goal2.xpos, goal2.ypos,goal2.width,goal2.height, null);
 
 
         //charecters hitbox
@@ -359,97 +393,14 @@ public class BasicGameApp implements Runnable {
         g.drawRect(goal2.topHitBox.x, goal2.topHitBox.y, goal2.topHitBox.width, goal2.topHitBox.height);
         g.setColor(Color.YELLOW);
         g.drawRect(goal2.bottomHitBox.x, goal2.bottomHitBox.y, goal2.bottomHitBox.width, goal2.bottomHitBox.height);
+
         //goal Icon
+
 
         if(goalTimer > 0){
             g.drawImage(giconPic,300,0,400,200,null);
         }
 
-        //show scroe for rick
-
-        if (scoregoal2 == 0){
-            g.drawImage(a, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 1){
-            g.drawImage(b, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 2){
-            g.drawImage(c, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 3){
-            g.drawImage(d, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 4){
-            g.drawImage(e, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 5){
-            g.drawImage(f, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 6){
-            g.drawImage(gg, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 7){
-            g.drawImage(h, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 8){
-            g.drawImage(i, 400,600, 100,100,null);
-
-        }
-        if (scoregoal2 == 9){
-            g.drawImage(j, 400,600, 100,100,null);
-
-        }
-
-        //show score for peter
-
-        if (scoregoal1 == 0){
-            g.drawImage(a, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 1){
-            g.drawImage(b, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 2){
-            g.drawImage(c, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 3){
-            g.drawImage(d, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 4){
-            g.drawImage(e, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 5){
-            g.drawImage(f, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 6){
-            g.drawImage(gg, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 7){
-            g.drawImage(h, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 8){
-            g.drawImage(i, 500,600, 100,100,null);
-
-        }
-        if (scoregoal1 == 9){
-            g.drawImage(j, 500,600, 100,100,null);
-
-        }
 
 
 
