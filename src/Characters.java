@@ -33,10 +33,10 @@ public class Characters {
                 height = 100;
                 isAlive = true;
                 hitBox = new Rectangle (xpos, ypos, width, height);
-                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
-                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos+10,10,height-20);
+                leftHitBox = new Rectangle (xpos,ypos+10,10,height-20);
                 topHitBox = new Rectangle (xpos,ypos,width,10);
-                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);
+                bottomHitBox = new Rectangle (xpos,ypos+height-10,width,10);
 
         }
 
@@ -59,10 +59,10 @@ public class Characters {
                         dy = -dy;
                 }
                 hitBox = new Rectangle (xpos, ypos, width, height);
-                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
-                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos+10,10,height-20);
+                leftHitBox = new Rectangle (xpos,ypos+10,10,height-20);
                 topHitBox = new Rectangle (xpos,ypos,width,10);
-                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);
+                bottomHitBox = new Rectangle (xpos,ypos+height-10,width,10);
 
         }
 
@@ -80,10 +80,11 @@ public class Characters {
                 }
 
                 hitBox = new Rectangle (xpos, ypos, width, height);
-                rightHitBox = new Rectangle (xpos+width-10,ypos,10,height);
-                leftHitBox = new Rectangle (xpos,ypos,10,height);
+                rightHitBox = new Rectangle (xpos+width-10,ypos+10,10,height-20);
+                leftHitBox = new Rectangle (xpos,ypos+10,10,height-20);
                 topHitBox = new Rectangle (xpos,ypos,width,10);
-                bottomHitBox = new Rectangle (xpos,ypos+height,width,10);        }
+                bottomHitBox = new Rectangle (xpos,ypos+height-10,width,10);
+        }
 
         public void wrap(){
                 xpos = xpos + dx;
